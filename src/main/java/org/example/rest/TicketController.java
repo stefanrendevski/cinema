@@ -13,20 +13,18 @@ import java.util.Optional;
 @RestController
 public class TicketController {
 
-  private final CinemaHall cinemaHall;
   private final TicketService ticketService;
 
   public TicketController(TicketService ticketService) {
     this.ticketService = ticketService;
-    this.cinemaHall = new CinemaHall(20, 100);
   }
 
   @PostMapping("/ticket")
   public Mono<Seat> getNextAvailableSeat(@RequestBody(required = false) Seat preferredSeat) {
     CinemaHall.Seat reservedSeat = Optional.ofNullable(preferredSeat)
       .map(seat -> new Point(seat.row(), seat.column()))
-      .map(cinemaHall::getNextAvailableTicket)
-      .orElseGet(cinemaHall::getNextAvailableTicket);
+      .map(ticketService::getNextAvailableTicket)
+      .orElseGet(ticketService::getNextAvailableTicket);
 
     return Mono.just(new Seat(reservedSeat.getPoint().x(), reservedSeat.getPoint().y()));
   }
