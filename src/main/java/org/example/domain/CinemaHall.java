@@ -1,4 +1,4 @@
-package org.example;
+package org.example.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,21 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class CinemaHall {
-
-  public record Point(int x, int y) {
-    public int distanceTo(Point other) {
-      return Math.abs(x - other.x) + Math.abs(y - other.y);
-    }
-
-    public Collection<Point> withinDistance() {
-      return List.of(
-        new Point(x + 1, y),
-        new Point(x - 1, y),
-        new Point(x, y + 1),
-        new Point(x, y - 1)
-      );
-    }
-  }
 
   @Getter
   @ToString
@@ -62,13 +47,6 @@ public class CinemaHall {
         .allAtDistance(this, 1)
         .noneMatch(Seat::isReserved);
     }
-
-    public Collection<Seat> withinDistance() {
-      return point.withinDistance().stream()
-        .map(point -> CinemaHall.this.get(point.x, point.y))
-        .filter(Objects::nonNull)
-        .toList();
-    }
   }
 
   private final Seat[][] seats;
@@ -85,7 +63,7 @@ public class CinemaHall {
       }
     }
 
-    this.centerSeat = seats[center.x][center.y];
+    this.centerSeat = seats[center.x()][center.y()];
   }
 
   public Seat center() {
@@ -115,7 +93,7 @@ public class CinemaHall {
 
     return finder.getAllAtDistance()
       .stream()
-      .map(point -> get(point.x, point.y))
+      .map(point -> get(point.x(), point.y()))
       .filter(Objects::nonNull);
   }
 
@@ -133,7 +111,7 @@ public class CinemaHall {
     for (int distance = 0; distance <= maxPossibleDistance; distance++) {
       Seat found = finder.getAllAtDistance()
         .stream()
-        .map(point -> get(point.x, point.y))
+        .map(point -> get(point.x(), point.y()))
         .filter(Objects::nonNull)
         .sorted(Comparator.comparingInt(seat -> seat.distanceToCenter))
         .filter(Seat::isAvailable)
@@ -167,7 +145,7 @@ public class CinemaHall {
         }
       }
 
-      distances[origin.x][origin.y] = 0;
+      distances[origin.x()][origin.y()] = 0;
     }
 
     private int rows() {
@@ -179,14 +157,14 @@ public class CinemaHall {
     }
 
     private Point getUpperLeftBoundary() {
-      int minX = Math.max(0, origin.x - currentMaxDistance);
-      int minY = Math.max(0, origin.y - currentMaxDistance);
+      int minX = Math.max(0, origin.x() - currentMaxDistance);
+      int minY = Math.max(0, origin.y() - currentMaxDistance);
       return new Point(minX, minY);
     }
 
     private Point getDownRightBoundary() {
-      int maxX = Math.min(rows() - 1, origin.x + currentMaxDistance);
-      int maxY = Math.min(cols() - 1, origin.y + currentMaxDistance);
+      int maxX = Math.min(rows() - 1, origin.x() + currentMaxDistance);
+      int maxY = Math.min(cols() - 1, origin.y() + currentMaxDistance);
       return new Point(maxX, maxY);
     }
 
@@ -196,8 +174,8 @@ public class CinemaHall {
       Point upperBoundary = getUpperLeftBoundary();
       Point downBoundary = getDownRightBoundary();
 
-      for (int i = upperBoundary.x; i <= downBoundary.x; i++) {
-        for (int j = upperBoundary.y; j <= downBoundary.y; j++) {
+      for (int i = upperBoundary.x(); i <= downBoundary.x(); i++) {
+        for (int j = upperBoundary.y(); j <= downBoundary.y(); j++) {
           if (distances[i][j] == -1) {
             continue;
           }
@@ -227,8 +205,8 @@ public class CinemaHall {
       Point upperBoundary = getUpperLeftBoundary();
       Point downBoundary = getDownRightBoundary();
 
-      for (int i = upperBoundary.x; i <= downBoundary.x; i++) {
-        for (int j = upperBoundary.y; j <= downBoundary.y; j++) {
+      for (int i = upperBoundary.x(); i <= downBoundary.x(); i++) {
+        for (int j = upperBoundary.y(); j <= downBoundary.y(); j++) {
           if (distances[i][j] == currentMaxDistance) {
             result.add(new Point(i, j));
           }

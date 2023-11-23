@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Add getNextAvailableTicket with preferred seat.">
+    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Incremental distance finding.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Point.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/CinemaApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/Seat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/TicketController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" afterDir="false" />
     </list>
@@ -32,8 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -64,11 +69,17 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="org.example" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall">
+  <component name="RunManager" selected="HTTP Request.generated-requests | #1">
+    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="CinemaHallTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="cinema.test" />
       <extension name="coverage">
@@ -80,38 +91,6 @@
       <option name="PACKAGE_NAME" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CinemaHallTest.allWithinRange_HappyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cinema.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
-      <option name="METHOD_NAME" value="allWithinRange_HappyPath" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CinemaHallTest.allWithinRange_WhenNotAllInRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cinema.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example" />
-      <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
-      <option name="METHOD_NAME" value="allWithinRange_WhenNotAllInRange" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -148,13 +127,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CinemaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="cinema.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.rest.CinemaApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.rest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
+        <item itemvalue="Spring Boot.CinemaApplication" />
         <item itemvalue="JUnit.CinemaHallTest" />
+        <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall" />
         <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_WhenPreferredSeatNotFree" />
-        <item itemvalue="JUnit.CinemaHallTest.allWithinRange_WhenNotAllInRange" />
-        <item itemvalue="JUnit.CinemaHallTest.allWithinRange_HappyPath" />
       </list>
     </recent_temporary>
   </component>
@@ -171,6 +163,14 @@
       <workItem from="1700724612447" duration="389000" />
       <workItem from="1700727330640" duration="1368000" />
     </task>
+    <task id="LOCAL-00001" summary="Incremental distance finding.">
+      <created>1700752974300</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1700752974300</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +189,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial" />
+    <MESSAGE value="Incremental distance finding." />
+    <option name="LAST_COMMIT_MESSAGE" value="Incremental distance finding." />
   </component>
 </project>

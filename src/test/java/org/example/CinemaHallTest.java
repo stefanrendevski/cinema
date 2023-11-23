@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.domain.CinemaHall;
+import org.example.domain.Point;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -14,21 +16,21 @@ class CinemaHallTest {
   void center_WhenEvenSquare() {
     var cinemaHall = new CinemaHall(2, 2);
     CinemaHall.Seat center = cinemaHall.center();
-    assertEquals(new CinemaHall.Point(1, 1), center.getPoint());
+    assertEquals(new Point(1, 1), center.getPoint());
   }
 
   @Test
   void center_WhenUnevenSquare() {
     var cinemaHall = new CinemaHall(3, 3);
     CinemaHall.Seat center = cinemaHall.center();
-    assertEquals(new CinemaHall.Point(1, 1), center.getPoint());
+    assertEquals(new Point(1, 1), center.getPoint());
   }
 
   @Test
   void center_WhenRectangle() {
     var cinemaHall = new CinemaHall(3, 4);
     CinemaHall.Seat center = cinemaHall.center();
-    assertEquals(new CinemaHall.Point(1, 2), center.getPoint());
+    assertEquals(new Point(1, 2), center.getPoint());
 
   }
 
@@ -43,10 +45,10 @@ class CinemaHallTest {
       .hasSize(4)
       .extracting(CinemaHall.Seat::getPoint)
       .containsExactlyInAnyOrder(
-        new CinemaHall.Point(2, 1),
-        new CinemaHall.Point(1, 2),
-        new CinemaHall.Point(2, 3),
-        new CinemaHall.Point(3, 2)
+        new Point(2, 1),
+        new Point(1, 2),
+        new Point(2, 3),
+        new Point(3, 2)
       );
   }
 
@@ -61,12 +63,12 @@ class CinemaHallTest {
       .hasSize(6)
       .extracting(CinemaHall.Seat::getPoint)
       .containsExactlyInAnyOrder(
-        new CinemaHall.Point(0, 2),
-        new CinemaHall.Point(1, 1),
-        new CinemaHall.Point(1, 3),
-        new CinemaHall.Point(2, 0),
-        new CinemaHall.Point(3, 1),
-        new CinemaHall.Point(3, 3)
+        new Point(0, 2),
+        new Point(1, 1),
+        new Point(1, 3),
+        new Point(2, 0),
+        new Point(3, 1),
+        new Point(3, 3)
       );
   }
 
@@ -102,7 +104,7 @@ class CinemaHallTest {
     cinemaHall.center().reserve();
 
     CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket();
-    assertEquals(new CinemaHall.Point(0, 0), taken.getPoint());
+    assertEquals(new Point(0, 0), taken.getPoint());
   }
 
   @Test
@@ -125,7 +127,7 @@ class CinemaHallTest {
     }
 
     long startTime = System.nanoTime();
-    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new CinemaHall.Point(1900, 1000));
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new Point(1900, 1000));
     long endTime = System.nanoTime() - startTime;
     System.out.println(taken + " at distance " + taken.distanceTo(cinemaHall.center()));
     System.out.println("Duration: " + Duration.ofNanos(endTime).toMillis() + " ms");
@@ -134,7 +136,7 @@ class CinemaHallTest {
   @Test
   void getNextAvailableTicket_WhenPreferredSeatFree() {
     var cinemaHall = new CinemaHall(4, 4);
-    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new CinemaHall.Point(0, 0));
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new Point(0, 0));
     assertEquals(cinemaHall.get(0, 0), taken);
   }
 
@@ -143,7 +145,7 @@ class CinemaHallTest {
     var cinemaHall = new CinemaHall(4, 4);
     cinemaHall.get(0, 0).reserve();
 
-    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new CinemaHall.Point(0, 0));
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new Point(0, 0));
     assertEquals(cinemaHall.get(1, 1), taken);
   }
 }
