@@ -108,54 +108,34 @@ public class CinemaHall {
   }
 
   public Stream<Seat> allAtDistance(Seat origin, int distance) {
-    Point point = origin.point;
-
-    int minX = Math.max(0, point.x - distance);
-    int maxX = Math.min(seats.length - 1, point.x + distance);
-    int minY = Math.max(0, point.y - distance);
-    int maxY = Math.min(seats.length - 1, point.y + distance);
-
-    List<Seat> result = new ArrayList<>();
-    for (int i = minX; i <= maxX; i++) {
-      for (int j = minY; j <= maxY; j++) {
-        if (seats[i][j].distanceTo(origin) == distance) {
-          result.add(seats[i][j]);
-        }
-      }
+    DistanceFinder finder = new DistanceFinder(seats.length, seats[0].length, origin.point);
+    for (int i = 1; i <= distance; i++) {
+      finder.advanceDistance();
     }
 
-    return result.stream();
+    return finder.getAllAtDistance()
+      .stream()
+      .map(point -> get(point.x, point.y))
+      .filter(Objects::nonNull);
   }
 
   // Search from center
   public Seat getNextAvailableTicket() {
-    int rows = seats.length;
-    int cols = seats[0].length;
-    int maxPossibleDistance = rows + cols - 2;
-
-    for (int distance = 0; distance <= maxPossibleDistance; distance++) {
-      Seat found = allAtDistance(center(), distance)
-        .filter(Seat::isAvailable)
-        .filter(Seat::reserve)
-        .findAny()
-        .orElse(null);
-
-      if (found != null) {
-        return found;
-      }
-    }
-
-    return null;
+    return getNextAvailableTicket(center);
   }
 
   public Seat getNextAvailableTicket(Point preferredSeat) {
     int rows = seats.length;
     int cols = seats[0].length;
     int maxPossibleDistance = rows + cols - 2;
+    DistanceFinder finder = new DistanceFinder(rows, cols, preferredSeat);
 
     for (int distance = 0; distance <= maxPossibleDistance; distance++) {
-      Seat found = allAtDistance(get(preferredSeat.x, preferredSeat.y), distance)
-        .sorted(Comparator.comparingInt(a -> a.distanceToCenter))
+      Seat found = finder.getAllAtDistance()
+        .stream()
+        .map(point -> get(point.x, point.y))
+        .filter(Objects::nonNull)
+        .sorted(Comparator.comparingInt(seat -> seat.distanceToCenter))
         .filter(Seat::isAvailable)
         .filter(Seat::reserve)
         .findAny()
@@ -164,8 +144,98 @@ public class CinemaHall {
       if (found != null) {
         return found;
       }
+
+      finder.advanceDistance();
     }
 
     return null;
+  }
+
+  private static class DistanceFinder {
+    private final int[][] distances;
+    private final Point origin;
+    private int currentMaxDistance;
+
+    public DistanceFinder(int rows, int cols, Point origin) {
+      this.distances = new int[rows][cols];
+      this.origin = origin;
+      this.currentMaxDistance = 0;
+
+      for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+          distances[i][j] = -1;
+        }
+      }
+
+      distances[origin.x][origin.y] = 0;
+    }
+
+    private int rows() {
+      return distances.length;
+    }
+
+    private int cols() {
+      return distances[0].length;
+    }
+
+    private Point getUpperLeftBoundary() {
+      int minX = Math.max(0, origin.x - currentMaxDistance);
+      int minY = Math.max(0, origin.y - currentMaxDistance);
+      return new Point(minX, minY);
+    }
+
+    private Point getDownRightBoundary() {
+      int maxX = Math.min(rows() - 1, origin.x + currentMaxDistance);
+      int maxY = Math.min(cols() - 1, origin.y + currentMaxDistance);
+      return new Point(maxX, maxY);
+    }
+
+    public void advanceDistance() {
+      currentMaxDistance++;
+
+      Point upperBoundary = getUpperLeftBoundary();
+      Point downBoundary = getDownRightBoundary();
+
+      for (int i = upperBoundary.x; i <= downBoundary.x; i++) {
+        for (int j = upperBoundary.y; j <= downBoundary.y; j++) {
+          if (distances[i][j] == -1) {
+            continue;
+          }
+
+          if (i + 1 < rows() && distances[i + 1][j] == -1) {
+            distances[i + 1][j] = distances[i][j] + 1;
+          }
+
+          if (i - 1 >= 0 && distances[i - 1][j] == -1) {
+            distances[i - 1][j] = distances[i][j] + 1;
+          }
+
+          if (j + 1 < cols() && distances[i][j + 1] == -1) {
+            distances[i][j + 1] = distances[i][j] + 1;
+          }
+
+          if (j - 1 >= 0 && distances[i][j - 1] == -1) {
+            distances[i][j - 1] = distances[i][j] + 1;
+          }
+        }
+      }
+    }
+
+    public Collection<Point> getAllAtDistance() {
+      Collection<Point> result = new HashSet<>();
+
+      Point upperBoundary = getUpperLeftBoundary();
+      Point downBoundary = getDownRightBoundary();
+
+      for (int i = upperBoundary.x; i <= downBoundary.x; i++) {
+        for (int j = upperBoundary.y; j <= downBoundary.y; j++) {
+          if (distances[i][j] == currentMaxDistance) {
+            result.add(new Point(i, j));
+          }
+        }
+      }
+
+      return result;
+    }
   }
 }

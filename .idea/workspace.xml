@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Initial commit">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Add getNextAvailableTicket with preferred seat.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" afterDir="false" />
@@ -70,75 +69,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall">
-    <configuration name="CinemaHallTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.CinemaHallTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="CinemaHallTest.getNextAvailableTicket_BiggerHall" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.CinemaHallTest.getNextAvailableTicket_BiggerHall&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="CinemaHallTest.getNextAvailableTicket_WhenNoSeatFree" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.CinemaHallTest.getNextAvailableTicket_WhenNoSeatFree&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="CinemaHallTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="cinema.test" />
       <extension name="coverage">
@@ -150,6 +80,38 @@
       <option name="PACKAGE_NAME" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CinemaHallTest.allWithinRange_HappyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cinema.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
+      <option name="METHOD_NAME" value="allWithinRange_HappyPath" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CinemaHallTest.allWithinRange_WhenNotAllInRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cinema.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
+      <option name="METHOD_NAME" value="allWithinRange_WhenNotAllInRange" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,13 +132,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CinemaHallTest.getNextAvailableTicket_WhenPreferredSeatNotFree" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cinema.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.CinemaHallTest" />
+      <option name="METHOD_NAME" value="getNextAvailableTicket_WhenPreferredSeatNotFree" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall" />
         <item itemvalue="JUnit.CinemaHallTest" />
-        <item itemvalue="Gradle.CinemaHallTest.getNextAvailableTicket_BiggerHall" />
-        <item itemvalue="Gradle.CinemaHallTest" />
-        <item itemvalue="Gradle.CinemaHallTest.getNextAvailableTicket_WhenNoSeatFree" />
+        <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_WhenPreferredSeatNotFree" />
+        <item itemvalue="JUnit.CinemaHallTest.allWithinRange_WhenNotAllInRange" />
+        <item itemvalue="JUnit.CinemaHallTest.allWithinRange_HappyPath" />
       </list>
     </recent_temporary>
   </component>
