@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Incremental distance finding.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/CinemaApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/Seat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/rest/TicketController.java" afterDir="false" />
+    <list default="true" id="89d86c39-eabc-4e8a-8975-b42daec4a07e" name="Changes" comment="Add rest api.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CinemaHall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/CinemaHallTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,17 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;aspect.path.notification.shown&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "aspect.path.notification.shown": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -84,7 +82,7 @@
       <module name="cinema.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.example.domain.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -99,7 +97,7 @@
       <module name="cinema.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.example.domain.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,7 +113,7 @@
       <module name="cinema.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.example.domain.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -129,10 +127,10 @@
     </configuration>
     <configuration name="CinemaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="cinema.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.rest.CinemaApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.CinemaApplication" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.rest.*" />
+          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -142,8 +140,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="Spring Boot.CinemaApplication" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="JUnit.CinemaHallTest" />
         <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_BiggerHall" />
         <item itemvalue="JUnit.CinemaHallTest.getNextAvailableTicket_WhenPreferredSeatNotFree" />
@@ -170,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1700752974300</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add rest api.">
+      <created>1700759128363</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1700759128363</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add rest api.">
+      <created>1700759233119</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700759233119</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +202,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial" />
     <MESSAGE value="Incremental distance finding." />
-    <option name="LAST_COMMIT_MESSAGE" value="Incremental distance finding." />
+    <MESSAGE value="Add rest api." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add rest api." />
   </component>
 </project>

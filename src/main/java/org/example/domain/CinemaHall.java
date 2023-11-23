@@ -10,6 +10,9 @@ import java.util.stream.Stream;
 
 public class CinemaHall {
 
+  public record SeatData(int x, int y, boolean reserved, int distanceToCenter) {
+  }
+
   @Getter
   @ToString
   @EqualsAndHashCode
@@ -24,6 +27,12 @@ public class CinemaHall {
       this.point = new Point(x, y);
       this.reserved = new AtomicBoolean(false);
       this.distanceToCenter = CinemaHall.this.center.distanceTo(point);
+    }
+
+    public Seat(SeatData seatData) {
+      this.point = new Point(seatData.x(), seatData.y());
+      this.reserved = new AtomicBoolean(seatData.reserved());
+      this.distanceToCenter = seatData.distanceToCenter();
     }
 
     public int distanceTo(Seat other) {
@@ -64,6 +73,17 @@ public class CinemaHall {
     }
 
     this.centerSeat = seats[center.x()][center.y()];
+  }
+
+  public CinemaHall(int rows, int cols, List<SeatData> seats) {
+    this.seats = new Seat[rows][cols];
+    this.center = new Point(rows / 2, cols / 2);
+
+    for (SeatData seat : seats) {
+      this.seats[seat.x()][seat.y()] = new Seat(seat);
+    }
+
+    this.centerSeat = this.seats[center.x()][center.y()];
   }
 
   public Seat center() {
