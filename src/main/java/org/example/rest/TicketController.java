@@ -2,6 +2,7 @@ package org.example.rest;
 
 import org.example.domain.CinemaHall;
 import org.example.domain.Point;
+import org.example.service.TicketService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,10 @@ import java.util.Optional;
 public class TicketController {
 
   private final CinemaHall cinemaHall;
+  private final TicketService ticketService;
 
-  public TicketController() {
+  public TicketController(TicketService ticketService) {
+    this.ticketService = ticketService;
     this.cinemaHall = new CinemaHall(20, 100);
   }
 

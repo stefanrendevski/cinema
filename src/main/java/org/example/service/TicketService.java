@@ -18,6 +18,19 @@ public class TicketService {
   public TicketService(CinemaHallRepository cinemaHallRepository, SeatRepository seatRepository) {
     this.cinemaHallRepository = cinemaHallRepository;
     this.seatRepository = seatRepository;
+
+    CinemaHall initialHall = new CinemaHall(50, 100);
+    org.example.persistence.CinemaHall persistentHall = new org.example.persistence.CinemaHall(
+      initialHall.rows(),
+      initialHall.cols(),
+      initialHall.getSeats()
+        .stream()
+        .map(CinemaHall.Seat::getSeatData)
+        .map(seatData -> new Seat(seatData.x(), seatData.y(), seatData.distanceToCenter(), seatData.reserved()))
+        .toList()
+    );
+
+    cinemaHallRepository.save(persistentHall);
   }
 
   public CinemaHall.Seat getNextAvailableTicket(Point point) {

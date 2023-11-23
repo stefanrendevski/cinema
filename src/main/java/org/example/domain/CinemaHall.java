@@ -56,6 +56,10 @@ public class CinemaHall {
         .allAtDistance(this, 1)
         .noneMatch(Seat::isReserved);
     }
+
+    public SeatData getSeatData() {
+      return new SeatData(point.x(), point.y(), isReserved(), distanceToCenter);
+    }
   }
 
   private final Seat[][] seats;
@@ -88,6 +92,24 @@ public class CinemaHall {
 
   public Seat center() {
     return centerSeat;
+  }
+
+  public int rows() {
+    return seats.length;
+  }
+
+  public int cols() {
+    return seats[0].length;
+  }
+
+  public Collection<Seat> getSeats() {
+    Collection<Seat> allSeats = new ArrayList<>();
+
+    for (int i = 0; i < rows(); i++) {
+      allSeats.addAll(Arrays.asList(seats[i]).subList(0, cols()));
+    }
+
+    return allSeats;
   }
 
   public Seat get(int x, int y) {
