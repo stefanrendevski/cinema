@@ -4,9 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class CinemaHall {
@@ -15,6 +14,15 @@ public class CinemaHall {
     public int distanceTo(Point other) {
       return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
+
+    public Collection<Point> withinDistance() {
+      return List.of(
+        new Point(x + 1, y),
+        new Point(x - 1, y),
+        new Point(x, y + 1),
+        new Point(x, y - 1)
+      );
+    }
   }
 
   @Getter
@@ -22,15 +30,23 @@ public class CinemaHall {
   @EqualsAndHashCode
   public final class Seat {
     private final Point point;
+    @EqualsAndHashCode.Exclude
     private final AtomicBoolean reserved;
+    @EqualsAndHashCode.Exclude
+    private final int distanceToCenter;
 
     public Seat(int x, int y) {
       this.point = new Point(x, y);
       this.reserved = new AtomicBoolean(false);
+      this.distanceToCenter = CinemaHall.this.center.distanceTo(point);
     }
 
     public int distanceTo(Seat other) {
-      return point.distanceTo(other.point);
+      if (other == center() && this == center()) {
+        return distanceToCenter;
+      } else {
+        return point.distanceTo(other.point);
+      }
     }
 
     public boolean isReserved() {
@@ -46,27 +62,48 @@ public class CinemaHall {
         .allAtDistance(this, 1)
         .noneMatch(Seat::isReserved);
     }
+
+    public Collection<Seat> withinDistance() {
+      return point.withinDistance().stream()
+        .map(point -> CinemaHall.this.get(point.x, point.y))
+        .filter(Objects::nonNull)
+        .toList();
+    }
   }
 
   private final Seat[][] seats;
-  private final Seat center;
+  private final Point center;
+  private final Seat centerSeat;
 
   public CinemaHall(int rows, int cols) {
     this.seats = new Seat[rows][cols];
+    this.center = new Point(rows / 2, cols / 2);
+
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         seats[i][j] = new Seat(i, j);
       }
     }
 
-    this.center = seats[rows / 2][cols / 2];
+    this.centerSeat = seats[center.x][center.y];
   }
 
   public Seat center() {
-    return center;
+    return centerSeat;
   }
 
   public Seat get(int x, int y) {
+    int rows = seats.length;
+    int cols = seats[0].length;
+
+    if (x < 0 || y < 0) {
+      return null;
+    }
+
+    if (x >= rows || y >= cols) {
+      return null;
+    }
+
     return seats[x][y];
   }
 
@@ -78,11 +115,16 @@ public class CinemaHall {
     int minY = Math.max(0, point.y - distance);
     int maxY = Math.min(seats.length - 1, point.y + distance);
 
-    return IntStream.rangeClosed(minX, maxX)
-      .mapToObj(i -> IntStream.rangeClosed(minY, maxY)
-        .mapToObj(j -> seats[i][j]))
-      .flatMap(Function.identity())
-      .filter(seat -> seat.distanceTo(origin) == distance);
+    List<Seat> result = new ArrayList<>();
+    for (int i = minX; i <= maxX; i++) {
+      for (int j = minY; j <= maxY; j++) {
+        if (seats[i][j].distanceTo(origin) == distance) {
+          result.add(seats[i][j]);
+        }
+      }
+    }
+
+    return result.stream();
   }
 
   // Search from center
@@ -92,7 +134,28 @@ public class CinemaHall {
     int maxPossibleDistance = rows + cols - 2;
 
     for (int distance = 0; distance <= maxPossibleDistance; distance++) {
-      Seat found = allAtDistance(center, distance)
+      Seat found = allAtDistance(center(), distance)
+        .filter(Seat::isAvailable)
+        .filter(Seat::reserve)
+        .findAny()
+        .orElse(null);
+
+      if (found != null) {
+        return found;
+      }
+    }
+
+    return null;
+  }
+
+  public Seat getNextAvailableTicket(Point preferredSeat) {
+    int rows = seats.length;
+    int cols = seats[0].length;
+    int maxPossibleDistance = rows + cols - 2;
+
+    for (int distance = 0; distance <= maxPossibleDistance; distance++) {
+      Seat found = allAtDistance(get(preferredSeat.x, preferredSeat.y), distance)
+        .sorted(Comparator.comparingInt(a -> a.distanceToCenter))
         .filter(Seat::isAvailable)
         .filter(Seat::reserve)
         .findAny()

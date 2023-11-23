@@ -2,7 +2,10 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,5 +115,37 @@ class CinemaHallTest {
 
     CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket();
     assertNull(taken);
+  }
+
+  @Test
+  void getNextAvailableTicket_BiggerHall() {
+    var cinemaHall = new CinemaHall(2000, 2000);
+    for (int i = 200; i <= 1800; i++) {
+      for (int j = 200; j <= 1800; j++) {
+        cinemaHall.get(i, j).reserve();
+      }
+    }
+
+    long startTime = System.nanoTime();
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket();
+    long endTime = System.nanoTime() - startTime;
+    System.out.println(taken + " at distance " + taken.distanceTo(cinemaHall.center()));
+    System.out.println("Duration: " + Duration.ofNanos(endTime).toMillis() + " ms");
+  }
+
+  @Test
+  void getNextAvailableTicket_WhenPreferredSeatFree() {
+    var cinemaHall = new CinemaHall(4, 4);
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new CinemaHall.Point(0, 0));
+    assertEquals(cinemaHall.get(0, 0), taken);
+  }
+
+  @Test
+  void getNextAvailableTicket_WhenPreferredSeatNotFree() {
+    var cinemaHall = new CinemaHall(4, 4);
+    cinemaHall.get(0, 0).reserve();
+
+    CinemaHall.Seat taken = cinemaHall.getNextAvailableTicket(new CinemaHall.Point(0, 0));
+    assertEquals(cinemaHall.get(0, 2), taken);
   }
 }
